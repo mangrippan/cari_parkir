@@ -4,19 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.tomcat.parkir.Parkir;
-import com.tomcat.parkir.DB.DBCreate;
+import com.tomcat.parkir.Object.Parkir;
+import com.tomcat.parkir.Object.User;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.attr.id;
 
 /**
  * Created by albertbrucelee on 26/04/17.
@@ -25,12 +18,13 @@ import static android.R.attr.id;
 public class DB {
 
     DBHelper dbH; //DBHelper class buat ke server
-    private Context context;
-    public DB(Context context){
-        this.context = context;
+    User user;
 
-        String auth[] = getAuth();
-        dbH = new DBHelper(this.context, auth[0], auth[1]);
+    private Context context;
+    public DB(Context context, User user){
+        this.context = context;
+        this.user=user;
+        dbH = new DBHelper(this.context, user.getUsername(), user.getPassword());
 
         //new DBCreate(context);
     }
@@ -88,15 +82,15 @@ public class DB {
             return null;
     }
 
-    public boolean login(String id, String password){
+    public boolean login(){
 
-        int signal=dbH.login(id,password);
+        int signal=dbH.login(user.getUsername(),user.getPassword());
         if (signal==0){
-
             JSONArray json=dbH.get();
             try{
                 JSONObject jData = json.getJSONObject(0);
-                setAuth(id, jData.getString("password"));   //simpan id dan password
+                user.setPassword(jData.getString("password"));
+                user.setAuth();
                 new DBCreate(context);
             }catch (JSONException e){
                 Log.e("Login.class JSON Parser", "Error parsing data " + e.toString());
@@ -106,35 +100,6 @@ public class DB {
         return false;
     }
     public int auth(){
-        String auth[] = getAuth();
-        return dbH.auth(auth[0],auth[1]);
-    }
-    public void setAuth(String id, String password){
-        SharedPreferences sharedPref= context.getSharedPreferences("auth", 0);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("id", id);
-        editor.putString("password", password);
-        editor.commit();
-    }
-
-    public String[] getAuth(){
-        SharedPreferences sharedPref= context.getSharedPreferences("auth", 0);
-        String auth[] = new String[2];
-        auth[0] = sharedPref.getString("id", "");
-        auth[1] = sharedPref.getString("password", "");
-        Log.d("auth id",auth[0]);
-        Log.d("auth id",auth[1]);
-        return auth;
-    }
-    public String getId(){
-        SharedPreferences sharedPref= context.getSharedPreferences("auth", 0);
-        String id=sharedPref.getString("id", "");
-        return id;
-    }
-    public void deleteAuth(){
-        SharedPreferences sharedPref= context.getSharedPreferences("auth", 0);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.clear();
-        editor.commit();
+        return dbH.auth(user.getUsername(),user.getPassword());
     }
 }

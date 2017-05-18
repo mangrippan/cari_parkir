@@ -1,4 +1,4 @@
-package com.tomcat.parkir;
+package com.tomcat.parkir.Object;
 
 /**
  * Created by albertbrucelee on 26/04/17.

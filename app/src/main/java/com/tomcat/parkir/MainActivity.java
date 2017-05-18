@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.tomcat.parkir.DB.DB;
 import com.tomcat.parkir.DB.DBHelper;
+import com.tomcat.parkir.Object.User;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -27,6 +29,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     private ProgressDialog pDialog;
     private DB db;
+    private User user;
     private Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +38,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();	//biar koneksi bisa dijalanin di main, karena aturannya koneksi gk boleh di Main langsung
         StrictMode.setThreadPolicy(policy);
-
-        db = new DB(this);
-        String auth[] = db.getAuth();              //apakah user dan password telah tersimpan
-
-        if(!auth[1].equals("")){
-            new Auth().execute();       //autentikasi user dan password ke server
+        User user = new User(this);
+        if(user.getPassword()!=null){
+            Log.d("User_id",user.getPassword());
+            new Auth(user).execute();       //autentikasi user dan password ke server
         }
     }
     class Auth extends AsyncTask<Integer, Integer, Integer> {
+        User user;
+        Auth(User user) {
+            this.user = user;
+        }
         // ### Before starting background thread Show Progress Dialog ###
         @Override
         protected void onPreExecute() {
@@ -57,7 +62,8 @@ public class MainActivity extends Activity {
 
         // ### Login Auth ###
         protected Integer doInBackground(Integer... args) {
-
+            Log.d("User_id2",user.getPassword());
+            DB db = new DB(getApplicationContext(),user);
             int signal=db.auth();
             if (signal==0){   //jika sukses
                 Intent i = new Intent(getApplicationContext(), HomeActivity.class);

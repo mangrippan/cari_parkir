@@ -7,17 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TwoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TwoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TwoFragment extends Fragment{
+public class Zbackup_TwoFragment extends Fragment{
 
-    public TwoFragment() {
+    public Zbackup_TwoFragment() {
         // Required empty public constructor
     }
 

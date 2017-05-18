@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.tomcat.parkir.DB.DB;
 import com.tomcat.parkir.DB.DBCreate;
+import com.tomcat.parkir.Object.User;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -47,7 +48,7 @@ import static android.R.attr.id;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
+    private User user;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        user = new User(this);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -316,8 +318,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
     public boolean login(String id, String password){
         // Building Parameters
-        DB db = new DB(getApplicationContext());
-        return db.login(id, password);
+        user.setUsername(id); user.setPassword(password);
+        DB db = new DB(getApplicationContext(), user);
+        return db.login();
     }
 }
 

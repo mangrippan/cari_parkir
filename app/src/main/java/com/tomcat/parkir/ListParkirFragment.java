@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tomcat.parkir.DB.DB;
+import com.tomcat.parkir.Object.Parkir;
+import com.tomcat.parkir.Object.User;
 
 /**
  * Created by albertbrucelee on 17/05/17.
@@ -116,7 +118,7 @@ public class ListParkirFragment extends Fragment {
     }
 
     public void getListParkir(){
-        DB db = new DB(getActivity());
+        DB db = new DB(getActivity(), new User(getContext()));
         parkir = db.getListParkir();
     }
 

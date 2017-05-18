@@ -1,12 +1,7 @@
 package com.tomcat.parkir;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 //import android.support.multidex.MultiDex;
@@ -26,6 +21,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.tomcat.parkir.DB.DB;
+import com.tomcat.parkir.Object.Parkir;
+import com.tomcat.parkir.Object.User;
 
 import org.w3c.dom.Document;
 
@@ -87,7 +84,7 @@ public class DetailParkirActivity extends AppCompatActivity  implements OnMapRea
     }
 
     public void getDetailParkir(String parkirId){
-        DB db = new DB(this);
+        DB db = new DB(this, new User(this));
         parkir = db.getDetailParkir(parkirId);
     }
 

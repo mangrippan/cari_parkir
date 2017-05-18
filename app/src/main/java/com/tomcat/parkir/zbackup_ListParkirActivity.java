@@ -18,6 +18,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tomcat.parkir.DB.DB;
+import com.tomcat.parkir.Object.Parkir;
+import com.tomcat.parkir.Object.User;
 //import gms.drive.*;
 
 public class zbackup_ListParkirActivity extends AppCompatActivity  implements OnMapReadyCallback {
@@ -35,7 +37,7 @@ public class zbackup_ListParkirActivity extends AppCompatActivity  implements On
         StrictMode.setThreadPolicy(policy);
 
         getListParkir();
-        User user = new User();
+        User user = new User(this);
 
 
 //        mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -78,7 +80,7 @@ public class zbackup_ListParkirActivity extends AppCompatActivity  implements On
 
 
     public void getListParkir(){
-        DB db = new DB(this);
+        DB db = new DB(this, new User(this));
         parkir = db.getListParkir();
     }
 

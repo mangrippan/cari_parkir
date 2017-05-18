@@ -13,12 +13,12 @@ import com.google.android.gms.plus.PlusOneButton;
 /**
  * A fragment with a Google +1 button.
  * Activities that contain this fragment must implement the
- * {@link PlusOneFragment.OnFragmentInteractionListener} interface
+ * {@link Zbackup_PlusOneFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PlusOneFragment#newInstance} factory method to
+ * Use the {@link Zbackup_PlusOneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlusOneFragment extends Fragment {
+public class Zbackup_PlusOneFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,7 +34,7 @@ public class PlusOneFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public PlusOneFragment() {
+    public Zbackup_PlusOneFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +44,11 @@ public class PlusOneFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PlusOneFragment.
+     * @return A new instance of fragment Zbackup_PlusOneFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlusOneFragment newInstance(String param1, String param2) {
-        PlusOneFragment fragment = new PlusOneFragment();
+    public static Zbackup_PlusOneFragment newInstance(String param1, String param2) {
+        Zbackup_PlusOneFragment fragment = new Zbackup_PlusOneFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
